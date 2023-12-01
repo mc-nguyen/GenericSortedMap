@@ -1,36 +1,47 @@
+// PROGRAMMER: HOANG LE
+// TESTING AND REVISING: MC NGUYEN
+
 public class SortedMap<K, V> {
+    // INSTANCE METHODS
     private int size;
     private SortedMapNode<K, V> smallestValueNode;
     private SortedMapNode<K, V> largestValueNode;
 
-    public SortedMap() {
-        this.size = 0;
-        this.smallestValueNode = null;
-        this.largestValueNode = null;
-    }
-
+    // CONSTRUCTORS
+    public SortedMap() { this.size = 0; } // the other two variables are auto-null
     public SortedMap(SortedMap<K, V> sortedMap) {
-        this.size = sortedMap.getSize();
-        this.smallestValueNode = copyNode(sortedMap.smallestValueNode);
-        this.largestValueNode = copyNode(sortedMap.largestValueNode);
-    }
-
-    private SortedMapNode<K, V> copyNode(SortedMapNode<K, V> node) 
-    {
-        if (node == null) {
-            return null;
+        if (sortedMap == null) this.size = 0;
+        else if (sortedMap.size == 0) this.size = 0;
+        else if (sortedMap.size == 1) {
+            this.size = 1;
+            smallestValueNode = new SortedMapNode<K, V>(
+                sortedMap.smallestValueNode.getKey(),
+                sortedMap.smallestValueNode.getValue(),
+                null, null);
+            largestValueNode = smallestValueNode;
+        } else {
+            this.size = sortedMap.size;
+            smallestValueNode = new SortedMapNode<K, V>(
+                sortedMap.smallestValueNode.getKey(),
+                sortedMap.smallestValueNode.getValue(),
+                null, null);
+                
+            SortedMapNode<K, V> current = sortedMap.smallestValueNode.getGreaterThanNode();
+            SortedMapNode<K, V> follow = this.smallestValueNode;
+            while (current != null) {
+                SortedMapNode<K, V> newNode = new SortedMapNode<K, V>(
+                    sortedMap.smallestValueNode.getKey(),
+                    sortedMap.smallestValueNode.getValue(),
+                    follow, null);
+                follow.setGreaterThanNode(newNode);
+                follow = newNode;
+                current = current.getGreaterThanNode();
+            }
+            largestValueNode = follow;
         }
-        SortedMapNode<K, V> newNode = new SortedMapNode<>(
-                node.getKey(),
-                node.getValue(),
-                copyNode(node.getLessThanNode()),
-                copyNode(node.getGreaterThanNode())
-        );
-    
-        return newNode;
     }
 
-
+    // INSTANCE METHODS
     public int getSize() {
         return size;
     }
