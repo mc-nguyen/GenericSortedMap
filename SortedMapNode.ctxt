@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=SortedMapNode
+comment1.params=key\ value\ lessThanNode\ greaterThanNode
+comment1.target=SortedMapNode(java.lang.Object,\ java.lang.Object,\ SortedMapNode,\ SortedMapNode)
+comment2.params=
+comment2.target=java.lang.Object\ getKey()
+comment3.params=key
+comment3.target=void\ setKey(java.lang.Object)
+comment4.params=
+comment4.target=java.lang.Object\ getValue()
+comment5.params=value
+comment5.target=void\ setValue(java.lang.Object)
+comment6.params=
+comment6.target=SortedMapNode\ getLessThanNode()
+comment7.params=lessThanNode
+comment7.target=void\ setLessThanNode(SortedMapNode)
+comment8.params=
+comment8.target=SortedMapNode\ getGreaterThanNode()
+comment9.params=greaterThanNode
+comment9.target=void\ setGreaterThanNode(SortedMapNode)
+numComments=10
