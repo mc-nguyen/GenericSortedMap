@@ -133,14 +133,15 @@ public class SortedMap<K, V> {
     }
     public K removeLargestValue() {
         if (largestValueNode == null) return null;
-        if (size == 1) return removeSmallestValue();
+        
         K largestKey = largestValueNode.getKey();
-        largestValueNode = largestValueNode.getLessThanNode();
-        largestValueNode.setGreaterThanNode(null);
-        --size;
+        if (size > 1) {
+            largestValueNode = largestValueNode.getLessThanNode();
+            largestValueNode.setGreaterThanNode(null);
+            --size;
+        } else clear();
         return largestKey;
     }
-
     public void remove(K key) {
         if (key.hashCode() >= smallestValueNode.getKey().hashCode() || key.hashCode() <= largestValueNode.getKey().hashCode())
             if (key.equals(smallestValueNode.getKey())) removeSmallestValue();
@@ -176,10 +177,7 @@ public class SortedMap<K, V> {
     }
     public void saveToFile(String filename) throws IOException {
         PrintWriter inputFile = new PrintWriter(filename);
-        for (SortedMapNode<K, V> current = smallestValueNode; 
-            current != null; 
-            current = current.getGreaterThanNode()
-        )
+        for (SortedMapNode<K, V> current = smallestValueNode; current != null; current = current.getGreaterThanNode())
             inputFile.println(current.getKey() + ": " + current.getValue());
         inputFile.close();
     }
